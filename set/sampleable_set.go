@@ -15,7 +15,9 @@ import (
 	avajson "github.com/luxfi/node/utils/json"
 )
 
-var _ json.Marshaler = (*Set[int])(nil)
+const minSetSize = 16
+
+var _ json.Marshaler = (*SampleableSet[int])(nil)
 
 // SampleableSet is a set of elements that supports sampling.
 type SampleableSet[T comparable] struct {
