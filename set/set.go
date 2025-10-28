@@ -1,5 +1,10 @@
 package set
 
+import (
+    "encoding/json"
+    "sort"
+)
+
 // Set represents a set of unique elements
 type Set[T comparable] map[T]struct{}
 
@@ -12,9 +17,11 @@ func Of[T comparable](elements ...T) Set[T] {
     return s
 }
 
-// Add adds an element to the set
-func (s Set[T]) Add(element T) {
-    s[element] = struct{}{}
+// Add adds one or more elements to the set
+func (s Set[T]) Add(elements ...T) {
+    for _, element := range elements {
+        s[element] = struct{}{}
+    }
 }
 
 // Contains checks if an element is in the set
@@ -94,4 +101,73 @@ func (s Set[T]) Equals(other Set[T]) bool {
         }
     }
     return true
+}
+
+// Overlaps checks if two sets have any common elements
+func (s Set[T]) Overlaps(other Set[T]) bool {
+    for k := range s {
+        if other.Contains(k) {
+            return true
+        }
+    }
+    return false
+}
+
+// Pop removes and returns an arbitrary element from the set
+// Returns the element and true if the set was non-empty, otherwise returns zero value and false
+func (s Set[T]) Pop() (T, bool) {
+    for k := range s {
+        delete(s, k)
+        return k, true
+    }
+    var zero T
+    return zero, false
+}
+
+// NewSet creates a new empty set with optional initial capacity
+func NewSet[T comparable](capacity ...int) Set[T] {
+    if len(capacity) > 0 && capacity[0] > 0 {
+        return make(Set[T], capacity[0])
+    }
+    return make(Set[T])
+}
+
+// MarshalJSON implements json.Marshaler interface
+// Marshals the set as a JSON array of elements in sorted order
+func (s Set[T]) MarshalJSON() ([]byte, error) {
+    // Convert set to slice for marshaling
+    list := s.List()
+
+    // Sort for consistent output (best effort for common types)
+    if len(list) > 1 {
+        switch any(list).(type) {
+        case []int:
+            sort.Ints(any(list).([]int))
+        case []string:
+            sort.Strings(any(list).([]string))
+        case []float64:
+            sort.Float64s(any(list).([]float64))
+        }
+    }
+
+    return json.Marshal(list)
+}
+
+// UnmarshalJSON implements json.Unmarshaler interface
+// Unmarshals a JSON array into a set, replacing existing contents
+func (s *Set[T]) UnmarshalJSON(data []byte) error {
+    var list []T
+    if err := json.Unmarshal(data, &list); err != nil {
+        return err
+    }
+
+    // Create a new set to replace existing contents
+    *s = make(Set[T], len(list))
+
+    // Add all elements from the list
+    for _, element := range list {
+        (*s)[element] = struct{}{}
+    }
+
+    return nil
 }
