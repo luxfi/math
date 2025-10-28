@@ -37,11 +37,11 @@ func TestSet(t *testing.T) {
 
 	require.False(s.Overlaps(s2))
 
-	s2.Union(s)
+	s2 = s2.Union(s)
 	require.True(s2.Contains(id1))
 	require.True(s.Overlaps(s2))
 
-	s2.Difference(s)
+	s2 = s2.Difference(s)
 	require.False(s2.Contains(id1))
 	require.False(s.Overlaps(s2))
 }
