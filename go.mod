@@ -1,6 +1,6 @@
 module github.com/luxfi/math
 
-go 1.25
+go 1.25.1
 
 require (
 	github.com/luxfi/geth v1.16.34
