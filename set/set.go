@@ -171,3 +171,13 @@ func (s *Set[T]) UnmarshalJSON(data []byte) error {
 
     return nil
 }
+
+// Peek returns a random element from the set.
+// If the set is empty, returns the zero value and false.
+func (s Set[T]) Peek() (T, bool) {
+	for elt := range s {
+		return elt, true
+	}
+	var zero T
+	return zero, false
+}
