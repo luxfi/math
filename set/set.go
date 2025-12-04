@@ -18,7 +18,11 @@ func Of[T comparable](elements ...T) Set[T] {
 }
 
 // Add adds one or more elements to the set
+// If the set is nil, this method will panic. Use NewSet() or Of() to create an initialized set.
 func (s Set[T]) Add(elements ...T) {
+    if s == nil {
+        panic("set: Add called on nil Set - use NewSet() or Of() to create an initialized set")
+    }
     for _, element := range elements {
         s[element] = struct{}{}
     }
