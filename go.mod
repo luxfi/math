@@ -5,10 +5,11 @@ go 1.24.5
 require (
 	github.com/luxfi/geth v1.16.34
 	github.com/luxfi/ids v1.0.2
-	github.com/luxfi/node v1.16.15
 	github.com/stretchr/testify v1.10.0
 	golang.org/x/exp v0.0.0-20250813145105-42675adae3e6
 )
+
+replace github.com/luxfi/utils => ../utils
 
 require (
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect

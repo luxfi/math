@@ -9,7 +9,7 @@ import (
 
 	"golang.org/x/exp/constraints"
 
-	"github.com/luxfi/node/utils"
+	"github.com/luxfi/utils"
 )
 
 var (
