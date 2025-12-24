@@ -8,11 +8,11 @@ import (
 	"encoding/json"
 	"slices"
 
-	"github.com/luxfi/node/utils"
-	"github.com/luxfi/node/utils/sampler"
-	"github.com/luxfi/node/utils/wrappers"
+	"github.com/luxfi/sampler"
+	"github.com/luxfi/utils"
+	"github.com/luxfi/utils/wrappers"
 
-	avajson "github.com/luxfi/node/utils/json"
+	luxjson "github.com/luxfi/utils/json"
 )
 
 const minSetSize = 16
@@ -151,7 +151,7 @@ func (s SampleableSet[T]) Sample(numToSample int) []T {
 
 func (s *SampleableSet[T]) UnmarshalJSON(b []byte) error {
 	str := string(b)
-	if str == avajson.Null {
+	if str == luxjson.Null {
 		return nil
 	}
 	var elements []T
