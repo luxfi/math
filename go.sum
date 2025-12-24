@@ -1,7 +1,5 @@
 github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc h1:U9qPSI2PIWSS1VwoXQT9A3Wy9MM3WgvqSxFWenqJduM=
 github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
-github.com/gorilla/rpc v1.2.1 h1:yC+LMV5esttgpVvNORL/xX4jvTTEUE30UZhZ5JF7K9k=
-github.com/gorilla/rpc v1.2.1/go.mod h1:uNpOihAlF5xRFLuTYhfR0yfCTm0WTQSQttkMSptRfGk=
 github.com/kr/pretty v0.3.1 h1:flRD4NNwYAUpkphVc1HcthR4KEIFJ65n8Mw5qdRn3LE=
 github.com/kr/pretty v0.3.1/go.mod h1:hoEshYVHaxMs3cyo3Yncou5ZscifuDolrwPKZanG3xk=
 github.com/kr/text v0.2.0 h1:5Nx0Ya0ZqY2ygV366QzturHI13Jq95ApcVaJBhpS+AY=
@@ -14,8 +12,6 @@ github.com/luxfi/ids v1.2.4 h1:e0OaeSI6xWjS9JnxxxfvCCs9HHDUrwDc3M9ctIhjcDI=
 github.com/luxfi/ids v1.2.4/go.mod h1:HwvRJSNbuZS+u+0JqeHfPX2S13iFyLCnfGxjBCmt244=
 github.com/luxfi/sampler v1.0.0 h1:k8Sf6otW83w4pQp0jXLA+g3J/joB7w7SqXQsWmNTOV0=
 github.com/luxfi/sampler v1.0.0/go.mod h1:f96/ozlj9vFfZj+akLtrHn4VpulQahwB+MQQhpeIekk=
-github.com/luxfi/utils v1.0.0 h1:eibxyw/xkwnB9KRSmYvKLbdLTUElyfJpxLIBeTBKqlU=
-github.com/luxfi/utils v1.0.0/go.mod h1:ABqhBdGNig0CaDcnNYldv1byS0BTNi5IKPbJSPF1p98=
 github.com/mr-tron/base58 v1.2.0 h1:T/HDJBh4ZCPbU39/+c3rRvE0uKBQlU27+QI8LJ4t64o=
 github.com/mr-tron/base58 v1.2.0/go.mod h1:BinMc/sQntlIE1frQmRFPUoPA1Zkr8VRgBdjWI2mNwc=
 github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 h1:Jamvg5psRIccs7FGNTlIRMkT8wgtp5eCXdBlqhYGL6U=

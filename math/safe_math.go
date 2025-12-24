@@ -9,7 +9,7 @@ import (
 
 	"golang.org/x/exp/constraints"
 
-	"github.com/luxfi/utils"
+	luxmath "github.com/luxfi/math"
 )
 
 var (
@@ -36,7 +36,7 @@ func Add64(a, b uint64) (uint64, error) {
 // 2) If there is underflow, an error
 func Sub[T constraints.Unsigned](a, b T) (T, error) {
 	if a < b {
-		return utils.Zero[T](), ErrUnderflow
+		return luxmath.Zero[T](), ErrUnderflow
 	}
 	return a - b, nil
 }

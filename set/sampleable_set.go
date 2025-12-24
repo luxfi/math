@@ -8,11 +8,8 @@ import (
 	"encoding/json"
 	"slices"
 
+	luxmath "github.com/luxfi/math"
 	"github.com/luxfi/sampler"
-	"github.com/luxfi/utils"
-	"github.com/luxfi/utils/wrappers"
-
-	luxjson "github.com/luxfi/utils/json"
 )
 
 const minSetSize = 16
@@ -111,7 +108,7 @@ func (s *SampleableSet[T]) Remove(elements ...T) {
 func (s *SampleableSet[T]) Clear() {
 	clear(s.indices)
 	for i := range s.elements {
-		s.elements[i] = utils.Zero[T]()
+		s.elements[i] = luxmath.Zero[T]()
 	}
 	s.elements = s.elements[:0]
 }
@@ -151,7 +148,7 @@ func (s SampleableSet[T]) Sample(numToSample int) []T {
 
 func (s *SampleableSet[T]) UnmarshalJSON(b []byte) error {
 	str := string(b)
-	if str == luxjson.Null {
+	if str == "null" {
 		return nil
 	}
 	var elements []T
@@ -178,24 +175,16 @@ func (s *SampleableSet[_]) MarshalJSON() ([]byte, error) {
 	slices.SortFunc(elementBytes, bytes.Compare)
 
 	// Build the JSON
-	var (
-		jsonBuf = bytes.Buffer{}
-		errs    = wrappers.Errs{}
-	)
-	_, err = jsonBuf.WriteString("[")
-	errs.Add(err)
+	var jsonBuf bytes.Buffer
+	jsonBuf.WriteString("[")
 	for i, elt := range elementBytes {
-		_, err := jsonBuf.Write(elt)
-		errs.Add(err)
+		jsonBuf.Write(elt)
 		if i != len(elementBytes)-1 {
-			_, err := jsonBuf.WriteString(",")
-			errs.Add(err)
+			jsonBuf.WriteString(",")
 		}
 	}
-	_, err = jsonBuf.WriteString("]")
-	errs.Add(err)
-
-	return jsonBuf.Bytes(), errs.Err
+	jsonBuf.WriteString("]")
+	return jsonBuf.Bytes(), nil
 }
 
 func (s *SampleableSet[T]) resize(size int) {
@@ -232,6 +221,6 @@ func (s *SampleableSet[T]) remove(e T) {
 	}
 
 	delete(s.indices, e)
-	s.elements[lastIndex] = utils.Zero[T]()
+	s.elements[lastIndex] = luxmath.Zero[T]()
 	s.elements = s.elements[:lastIndex]
 }
