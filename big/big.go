@@ -1,11 +1,13 @@
 // Copyright (C) 2019-2025, Lux Industries Inc. All rights reserved.
 // See the file LICENSE for licensing terms.
 
-package math
+// Package big provides big.Int utilities and parsing functions.
+package big
 
 import (
 	"fmt"
 	"math/big"
+	"strconv"
 )
 
 // Various big integer limit values.
@@ -16,9 +18,7 @@ var (
 )
 
 const (
-	// number of bits in a big.Word
-	wordBits = 32 << (uint64(^big.Word(0)) >> 63)
-	// number of bytes in a big.Word
+	wordBits  = 32 << (uint64(^big.Word(0)) >> 63)
 	wordBytes = wordBits / 8
 )
 
@@ -32,7 +32,6 @@ func NewHexOrDecimal256(x int64) *HexOrDecimal256 {
 	return &h
 }
 
-// UnmarshalJSON implements json.Unmarshaler.
 func (i *HexOrDecimal256) UnmarshalJSON(input []byte) error {
 	if len(input) > 1 && input[0] == '"' {
 		input = input[1 : len(input)-1]
@@ -40,7 +39,6 @@ func (i *HexOrDecimal256) UnmarshalJSON(input []byte) error {
 	return i.UnmarshalText(input)
 }
 
-// UnmarshalText implements encoding.TextUnmarshaler.
 func (i *HexOrDecimal256) UnmarshalText(input []byte) error {
 	bigint, ok := ParseBig256(string(input))
 	if !ok {
@@ -50,7 +48,6 @@ func (i *HexOrDecimal256) UnmarshalText(input []byte) error {
 	return nil
 }
 
-// MarshalText implements encoding.TextMarshaler.
 func (i *HexOrDecimal256) MarshalText() ([]byte, error) {
 	if i == nil {
 		return []byte("0x0"), nil
@@ -61,14 +58,12 @@ func (i *HexOrDecimal256) MarshalText() ([]byte, error) {
 // Decimal256 unmarshals big.Int as a decimal string.
 type Decimal256 big.Int
 
-// NewDecimal256 creates a new Decimal256
 func NewDecimal256(x int64) *Decimal256 {
 	b := big.NewInt(x)
 	d := Decimal256(*b)
 	return &d
 }
 
-// UnmarshalText implements encoding.TextUnmarshaler.
 func (i *Decimal256) UnmarshalText(input []byte) error {
 	bigint, ok := ParseBig256(string(input))
 	if !ok {
@@ -78,17 +73,38 @@ func (i *Decimal256) UnmarshalText(input []byte) error {
 	return nil
 }
 
-// MarshalText implements encoding.TextMarshaler.
 func (i *Decimal256) MarshalText() ([]byte, error) {
 	return []byte(i.String()), nil
 }
 
-// String implements Stringer.
 func (i *Decimal256) String() string {
 	if i == nil {
 		return "0"
 	}
 	return fmt.Sprintf("%#d", (*big.Int)(i))
+}
+
+// HexOrDecimal64 marshals uint64 as hex or decimal.
+type HexOrDecimal64 uint64
+
+func (i *HexOrDecimal64) UnmarshalJSON(input []byte) error {
+	if len(input) > 1 && input[0] == '"' {
+		input = input[1 : len(input)-1]
+	}
+	return i.UnmarshalText(input)
+}
+
+func (i *HexOrDecimal64) UnmarshalText(input []byte) error {
+	n, ok := ParseUint64(string(input))
+	if !ok {
+		return fmt.Errorf("invalid hex or decimal integer %q", input)
+	}
+	*i = HexOrDecimal64(n)
+	return nil
+}
+
+func (i HexOrDecimal64) MarshalText() ([]byte, error) {
+	return fmt.Appendf(nil, "%#x", uint64(i)), nil
 }
 
 // ParseBig256 parses s as a 256 bit integer in decimal or hexadecimal syntax.
@@ -114,6 +130,28 @@ func MustParseBig256(s string) *big.Int {
 	v, ok := ParseBig256(s)
 	if !ok {
 		panic("invalid 256 bit integer: " + s)
+	}
+	return v
+}
+
+// ParseUint64 parses s as an integer in decimal or hexadecimal syntax.
+func ParseUint64(s string) (uint64, bool) {
+	if s == "" {
+		return 0, true
+	}
+	if len(s) >= 2 && (s[:2] == "0x" || s[:2] == "0X") {
+		v, err := strconv.ParseUint(s[2:], 16, 64)
+		return v, err == nil
+	}
+	v, err := strconv.ParseUint(s, 10, 64)
+	return v, err == nil
+}
+
+// MustParseUint64 parses s as an integer and panics if invalid.
+func MustParseUint64(s string) uint64 {
+	v, ok := ParseUint64(s)
+	if !ok {
+		panic("invalid unsigned 64 bit integer: " + s)
 	}
 	return v
 }

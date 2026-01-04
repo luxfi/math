@@ -59,3 +59,23 @@ func Mul[T constraints.Unsigned](a, b T) (T, error) {
 func AbsDiff[T constraints.Unsigned](a, b T) T {
 	return max(a, b) - min(a, b)
 }
+
+// SafeAdd returns x+y and whether overflow occurred.
+func SafeAdd(x, y uint64) (uint64, bool) {
+	sum := x + y
+	return sum, sum < x
+}
+
+// SafeSub returns x-y and whether underflow occurred.
+func SafeSub(x, y uint64) (uint64, bool) {
+	return x - y, x < y
+}
+
+// SafeMul returns x*y and whether overflow occurred.
+func SafeMul(x, y uint64) (uint64, bool) {
+	if x == 0 || y == 0 {
+		return 0, false
+	}
+	result := x * y
+	return result, result/y != x
+}

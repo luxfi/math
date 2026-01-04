@@ -3,11 +3,7 @@
 
 package heap
 
-import (
-	"container/heap"
-
-	luxmath "github.com/luxfi/math"
-)
+import "container/heap"
 
 var _ heap.Interface = (*queue[int])(nil)
 
@@ -44,7 +40,7 @@ func (q *Queue[T]) Push(t T) {
 
 func (q *Queue[T]) Pop() (T, bool) {
 	if q.Len() == 0 {
-		return luxmath.Zero[T](), false
+		return zero[T](), false
 	}
 
 	return heap.Pop(q.queue).(T), true
@@ -52,7 +48,7 @@ func (q *Queue[T]) Pop() (T, bool) {
 
 func (q *Queue[T]) Peek() (T, bool) {
 	if q.Len() == 0 {
-		return luxmath.Zero[T](), false
+		return zero[T](), false
 	}
 
 	return q.queue.entries[0], true
@@ -87,7 +83,7 @@ func (q *queue[T]) Pop() any {
 	end := len(q.entries) - 1
 
 	popped := q.entries[end]
-	q.entries[end] = luxmath.Zero[T]()
+	q.entries[end] = zero[T]()
 	q.entries = q.entries[:end]
 
 	return popped
