@@ -19,12 +19,12 @@ func TestAveragerHeap(t *testing.T) {
 
 	tests := []struct {
 		name string
-		h    AveragerHeap
+		h    AveragerHeap[ids.NodeID]
 		a    []Averager
 	}{
 		{
 			name: "max heap",
-			h:    NewMaxAveragerHeap(),
+			h:    NewMaxAveragerHeap[ids.NodeID](),
 			a: []Averager{
 				NewAverager(0, time.Second, time.Now()),
 				NewAverager(-1, time.Second, time.Now()),
