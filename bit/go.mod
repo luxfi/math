@@ -1,3 +1,3 @@
 module github.com/luxfi/math/bit
 
-go 1.24.9
+go 1.26
