@@ -7,22 +7,22 @@ import (
 	"fmt"
 	"sync"
 
+	"github.com/luxfi/math/ntt/canonical"
 	"github.com/luxfi/math/params"
-
-	"github.com/luxfi/lattice/v7/ring"
 )
 
-// pureGoBackend is the canonical pure-Go NTT realization. It delegates
-// to github.com/luxfi/lattice/v7/ring's SubRing.NTT / INTT — the
-// canonical Lattigo-derived Montgomery NTT — so callers see no
-// behavior change vs the v0.1.x lattice path.
+// pureGoBackend is the canonical pure-Go NTT realization. It owns the
+// Lattigo-derived Montgomery NTT body via the internal canonical
+// package; lattice/v7/ring re-exports the same body for downstream
+// consumers, so callers see no behavior change vs the v0.1.x lattice
+// path.
 //
-// LP-107 Phase 3 will invert this dependency: the canonical kernel
-// body will live in this package, and luxfi/lattice will import
-// luxfi/math/ntt to expose ring.SubRing.NTT.
+// LP-107 Phase 3 (this file): the canonical kernel body now lives in
+// luxfi/math/ntt/internal/canonical. luxfi/lattice/ring is a thin shim
+// that delegates to it.
 type pureGoBackend struct {
-	mu    sync.RWMutex
-	rings map[params.NTTParamID]*ring.Ring
+	mu       sync.RWMutex
+	subRings map[params.NTTParamID]*canonical.SubRing
 }
 
 // PureGoBackend returns the singleton pure-Go NTT backend. Always
@@ -32,7 +32,7 @@ func PureGoBackend() Backend {
 }
 
 var thePureGo = pureGoBackend{
-	rings: make(map[params.NTTParamID]*ring.Ring),
+	subRings: make(map[params.NTTParamID]*canonical.SubRing),
 }
 
 func init() {
@@ -49,26 +49,30 @@ func (b *pureGoBackend) Supports(p *Params) bool {
 	return p != nil && p.Validate() == nil
 }
 
-// resolveRing returns or builds the cached *ring.Ring for p.
-func (b *pureGoBackend) resolveRing(p *Params) (*ring.Ring, error) {
+// resolveSubRing returns or builds the cached *canonical.SubRing for p.
+func (b *pureGoBackend) resolveSubRing(p *Params) (*canonical.SubRing, error) {
 	b.mu.RLock()
-	r, ok := b.rings[p.ID]
+	sr, ok := b.subRings[p.ID]
 	b.mu.RUnlock()
 	if ok {
-		return r, nil
+		return sr, nil
 	}
 	b.mu.Lock()
 	defer b.mu.Unlock()
-	if r, ok := b.rings[p.ID]; ok {
-		return r, nil
+	if sr, ok := b.subRings[p.ID]; ok {
+		return sr, nil
 	}
-	rr, err := ring.NewRing(int(p.N), []uint64{p.Q})
+	sr, err := canonical.NewSubRing(int(p.N), p.Q)
 	if err != nil {
-		return nil, fmt.Errorf("ntt(pure-go): ring.NewRing(N=%d, Q=%d): %w",
+		return nil, fmt.Errorf("ntt(pure-go): canonical.NewSubRing(N=%d, Q=%d): %w",
 			p.N, p.Q, err)
 	}
-	b.rings[p.ID] = rr
-	return rr, nil
+	if err := sr.GenerateNTTConstants(); err != nil {
+		return nil, fmt.Errorf("ntt(pure-go): GenerateNTTConstants(N=%d, Q=%d): %w",
+			p.N, p.Q, err)
+	}
+	b.subRings[p.ID] = sr
+	return sr, nil
 }
 
 // Forward implements Backend.
@@ -81,11 +85,10 @@ func (b *pureGoBackend) Forward(dst []uint64, p *Params, batch uint32) error {
 		return fmt.Errorf("ntt(pure-go): buffer too small: need %d got %d",
 			int(batch)*N, len(dst))
 	}
-	r, err := b.resolveRing(p)
+	sr, err := b.resolveSubRing(p)
 	if err != nil {
 		return err
 	}
-	sr := r.SubRings[0]
 	for i := uint32(0); i < batch; i++ {
 		off := int(i) * N
 		sr.NTT(dst[off:off+N], dst[off:off+N])
@@ -103,11 +106,10 @@ func (b *pureGoBackend) Inverse(dst []uint64, p *Params, batch uint32) error {
 		return fmt.Errorf("ntt(pure-go): buffer too small: need %d got %d",
 			int(batch)*N, len(dst))
 	}
-	r, err := b.resolveRing(p)
+	sr, err := b.resolveSubRing(p)
 	if err != nil {
 		return err
 	}
-	sr := r.SubRings[0]
 	for i := uint32(0); i < batch; i++ {
 		off := int(i) * N
 		sr.INTT(dst[off:off+N], dst[off:off+N])
