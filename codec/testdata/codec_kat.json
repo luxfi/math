@@ -1,0 +1,75 @@
+{
+  "schema": "lux.math.kat.v1",
+  "entries": [
+    {
+      "header": {
+        "parameter_set": "math.codec.v1",
+        "modulus_id": "pulsar-q-0x1000000004a01",
+        "backend_id": "pure-go",
+        "hash_suite_id": "blake3-v1",
+        "implementation_name": "luxfi/math/codec",
+        "implementation_version": "v0.2.0"
+      },
+      "test": "ReadUint64Slice/happy-path/3-elements",
+      "input_hex": "03efbeadde00000000bebafeca000000008877665544332211",
+      "output_hex": "efbeadde00000000bebafeca000000008877665544332211",
+      "output_sha256": "884a0a3e0f693db5c4b8bbd2503ae2f8dcebfaf8075acf7a1c82857599bbc8e3"
+    },
+    {
+      "header": {
+        "parameter_set": "math.codec.v1",
+        "modulus_id": "pulsar-q-0x1000000004a01",
+        "backend_id": "pure-go",
+        "hash_suite_id": "blake3-v1",
+        "implementation_name": "luxfi/math/codec",
+        "implementation_version": "v0.2.0"
+      },
+      "test": "ReadUint64Slice/empty",
+      "input_hex": "00",
+      "output_hex": "",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "header": {
+        "parameter_set": "math.codec.v1",
+        "modulus_id": "pulsar-q-0x1000000004a01",
+        "backend_id": "pure-go",
+        "hash_suite_id": "blake3-v1",
+        "implementation_name": "luxfi/math/codec",
+        "implementation_version": "v0.2.0"
+      },
+      "test": "ReadUint64Slice/reject/lattice-issue-4-70T",
+      "input_hex": "ad83f3e4808010",
+      "output_hex": "52454a4543544544",
+      "output_sha256": "04cc0e71ffcffb522791a4e0119fe4cf339d8e85a4fadea0a13df0f3062ad8bf"
+    },
+    {
+      "header": {
+        "parameter_set": "math.codec.v1",
+        "modulus_id": "pulsar-q-0x1000000004a01",
+        "backend_id": "pure-go",
+        "hash_suite_id": "blake3-v1",
+        "implementation_name": "luxfi/math/codec",
+        "implementation_version": "v0.2.0"
+      },
+      "test": "ReadUint16Slice/happy-path/5-elements",
+      "input_hex": "0502010403060508070a09",
+      "output_hex": "02010403060508070a09",
+      "output_sha256": "ba23dd73c899102847b646b79e00d40ec9f97d2a7471b8fc1330fd6f74a45cc3"
+    },
+    {
+      "header": {
+        "parameter_set": "math.codec.v1",
+        "modulus_id": "pulsar-q-0x1000000004a01",
+        "backend_id": "pure-go",
+        "hash_suite_id": "blake3-v1",
+        "implementation_name": "luxfi/math/codec",
+        "implementation_version": "v0.2.0"
+      },
+      "test": "ReadUint32Slice/happy-path/4-elements",
+      "input_hex": "04785634122143658733221100ccddeeff",
+      "output_hex": "785634122143658733221100ccddeeff",
+      "output_sha256": "4b13dba670b17377c4f419c36b00ea2d3ba4a1c585e163ffa6f43e400cb32fde"
+    }
+  ]
+}
