@@ -1,12 +1,12 @@
 // Body migrated from luxfi/lattice/v7/utils/factorization/factorization.go.
-// LP-107 Phase 3 — moved into the canonical NTT package so the
+// LP-107 Phase 3 — moved into the NTT package so the
 // SubRing constructor can factor q-1 to find a primitive root without
 // importing lattice.
 //
 // Renamed: IsPrime -> isPrimeBig (avoids collision with utils.IsPrime
 // which takes uint64; both stay package-internal here).
 
-package canonical
+package subring
 
 import (
 	"math"

@@ -3,7 +3,7 @@
 // SIMD-accelerated NTT body for AVX2 amd64 with GOEXPERIMENT=simd.
 // LP-107 Phase 3 — verbatim from luxfi/lattice/v7/ring/ntt_simd.go.
 
-package canonical
+package subring
 
 import (
 	"math/bits"

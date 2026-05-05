@@ -3,7 +3,7 @@
 // SIMD stub for non-AVX2 / non-experimental-simd builds.
 // LP-107 Phase 3 — verbatim from luxfi/lattice/v7/ring/ntt_simd_stub.go.
 
-package canonical
+package subring
 
 // nttCoreLazyAccel is the stub for non-SIMD builds.
 // Returns false to indicate no acceleration was applied.

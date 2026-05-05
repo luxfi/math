@@ -1,7 +1,7 @@
 // Copyright (c) 2026 Lux Industries Inc.
 // SPDX-License-Identifier: BSD-3-Clause
 
-package canonical
+package subring
 
 import (
 	"math/rand/v2"
@@ -14,7 +14,7 @@ const (
 	pulsarQ  = uint64(0x1000000004A01)
 )
 
-// TestSubRing_RoundTrip exercises the full canonical path:
+// TestSubRing_RoundTrip exercises the full path:
 // constructor + GenerateNTTConstants + forward NTT + inverse NTT.
 func TestSubRing_RoundTrip(t *testing.T) {
 	sr, err := NewSubRing(pulsarN, pulsarQ)
