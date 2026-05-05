@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: BSD-3-Clause
 //
 // Body migrated from luxfi/lattice/v7/ring/subring.go.
-// LP-107 Phase 3 — luxfi/math is the canonical owner of the Lattigo-derived
+// LP-107 Phase 3 — luxfi/math is the owner of the Lattigo-derived
 // Montgomery NTT body and SubRing layout. luxfi/lattice/ring re-exports.
 //
 // Changes from upstream:
@@ -10,7 +10,7 @@
 //   - utils.BitReverse64       -> BitReverse64 (same package)
 //   - bignum.NewInt(uint64)    -> new(big.Int).SetUint64(...)
 
-package canonical
+package subring
 
 import (
 	"fmt"

@@ -4,7 +4,7 @@
 // Helpers migrated from luxfi/lattice/v7/ring (utils.go, primes.go) and
 // luxfi/lattice/v7/utils (BitReverse64). LP-107 Phase 3.
 
-package canonical
+package subring
 
 import (
 	"math/big"
