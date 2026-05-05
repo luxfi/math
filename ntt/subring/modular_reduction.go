@@ -3,10 +3,10 @@
 //
 // Body migrated from github.com/luxfi/lattice/v7/ring/modular_reduction.go
 // (Lattigo-derived). LP-107 Phase 3 establishes luxfi/math as the
-// canonical owner of the Montgomery / Barrett scalar primitives; the
+// owner of the Montgomery / Barrett scalar primitives; the
 // lattice copy now delegates to this package.
 
-package canonical
+package subring
 
 import (
 	"math/big"
