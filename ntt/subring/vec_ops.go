@@ -5,7 +5,7 @@
 // LP-107 Phase 3 — only the helpers required by the NTT body
 // (reducevec, mulscalarmontgomeryvec, mulscalarmontgomerylazyvec).
 
-package canonical
+package subring
 
 import "unsafe"
 

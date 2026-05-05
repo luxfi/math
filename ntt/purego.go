@@ -7,22 +7,22 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/luxfi/math/ntt/canonical"
+	"github.com/luxfi/math/ntt/subring"
 	"github.com/luxfi/math/params"
 )
 
-// pureGoBackend is the canonical pure-Go NTT realization. It owns the
-// Lattigo-derived Montgomery NTT body via the internal canonical
-// package; lattice/v7/ring re-exports the same body for downstream
-// consumers, so callers see no behavior change vs the v0.1.x lattice
-// path.
+// pureGoBackend is the pure-Go NTT realization. It owns the
+// Lattigo-derived Montgomery NTT body via the subring package;
+// lattice/v7/ring re-exports the same body for downstream
+// consumers, so callers see no behavior change vs the v0.1.x
+// lattice path.
 //
-// LP-107 Phase 3 (this file): the canonical kernel body now lives in
-// luxfi/math/ntt/internal/canonical. luxfi/lattice/ring is a thin shim
+// LP-107 Phase 3 (this file): the kernel body lives in
+// luxfi/math/ntt/subring. luxfi/lattice/ring is a thin shim
 // that delegates to it.
 type pureGoBackend struct {
 	mu       sync.RWMutex
-	subRings map[params.NTTParamID]*canonical.SubRing
+	subRings map[params.NTTParamID]*subring.SubRing
 }
 
 // PureGoBackend returns the singleton pure-Go NTT backend. Always
@@ -32,7 +32,7 @@ func PureGoBackend() Backend {
 }
 
 var thePureGo = pureGoBackend{
-	subRings: make(map[params.NTTParamID]*canonical.SubRing),
+	subRings: make(map[params.NTTParamID]*subring.SubRing),
 }
 
 func init() {
@@ -49,8 +49,8 @@ func (b *pureGoBackend) Supports(p *Params) bool {
 	return p != nil && p.Validate() == nil
 }
 
-// resolveSubRing returns or builds the cached *canonical.SubRing for p.
-func (b *pureGoBackend) resolveSubRing(p *Params) (*canonical.SubRing, error) {
+// resolveSubRing returns or builds the cached *subring.SubRing for p.
+func (b *pureGoBackend) resolveSubRing(p *Params) (*subring.SubRing, error) {
 	b.mu.RLock()
 	sr, ok := b.subRings[p.ID]
 	b.mu.RUnlock()
@@ -62,9 +62,9 @@ func (b *pureGoBackend) resolveSubRing(p *Params) (*canonical.SubRing, error) {
 	if sr, ok := b.subRings[p.ID]; ok {
 		return sr, nil
 	}
-	sr, err := canonical.NewSubRing(int(p.N), p.Q)
+	sr, err := subring.NewSubRing(int(p.N), p.Q)
 	if err != nil {
-		return nil, fmt.Errorf("ntt(pure-go): canonical.NewSubRing(N=%d, Q=%d): %w",
+		return nil, fmt.Errorf("ntt(pure-go): subring.NewSubRing(N=%d, Q=%d): %w",
 			p.N, p.Q, err)
 	}
 	if err := sr.GenerateNTTConstants(); err != nil {

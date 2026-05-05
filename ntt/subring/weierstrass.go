@@ -2,7 +2,7 @@
 // LP-107 Phase 3 — randInt inlined to drop the lattice/v7/utils/sampling
 // import so this package has zero lattice dependencies.
 
-package canonical
+package subring
 
 import (
 	"crypto/rand"

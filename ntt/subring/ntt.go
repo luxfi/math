@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: BSD-3-Clause
 //
 // Body migrated verbatim from luxfi/lattice/v7/ring/ntt.go.
-// LP-107 Phase 3 — luxfi/math is the canonical owner of the
+// LP-107 Phase 3 — luxfi/math is the owner of the
 // Lattigo-derived Montgomery NTT body.
 
-package canonical
+package subring
 
 import (
 	"fmt"
