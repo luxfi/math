@@ -1,6 +1,6 @@
 module github.com/luxfi/math
 
-go 1.26.1
+go 1.26.3
 
 require (
 	github.com/luxfi/ids v1.2.7
