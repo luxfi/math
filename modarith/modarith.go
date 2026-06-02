@@ -80,8 +80,8 @@ func computeQInv(q uint64) uint64 {
 // big.Int allocation is amortized.
 func computeR2(q uint64) uint64 {
 	one := big.NewInt(1)
-	r2 := new(big.Int).Lsh(one, 128)             // 2^128
-	r2.Mod(r2, new(big.Int).SetUint64(q))         // 2^128 mod q
+	r2 := new(big.Int).Lsh(one, 128)      // 2^128
+	r2.Mod(r2, new(big.Int).SetUint64(q)) // 2^128 mod q
 	return r2.Uint64()
 }
 
@@ -90,7 +90,7 @@ func computeR2(q uint64) uint64 {
 func computeBarrett(q uint64) [2]uint64 {
 	one := big.NewInt(1)
 	mu := new(big.Int).Lsh(one, 128)
-	mu.Quo(mu, new(big.Int).SetUint64(q))         // floor(2^128 / q)
+	mu.Quo(mu, new(big.Int).SetUint64(q)) // floor(2^128 / q)
 
 	low := new(big.Int).And(mu, new(big.Int).SetUint64(^uint64(0)))
 	high := new(big.Int).Rsh(mu, 64)
