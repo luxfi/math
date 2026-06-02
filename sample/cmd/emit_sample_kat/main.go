@@ -15,11 +15,12 @@
 //	go run ./cmd/emit_sample_kat --out testdata/sample_kat.json
 //
 // Each entry contains:
-//   Test:       "Uniform/q=PulsarQ/i=N"            -> param: q
-//               "Ternary/q=PulsarQ/density=0.50/i=N" -> param: q, density
-//               "CenteredBinomial/q=PulsarQ/eta=2/i=N" -> param: q, eta
-//   InputHex:   raw entropy bytes (4096) from a SHA-256 hash chain
-//   OutputHex:  first 64 samples, packed little-endian (512 bytes)
+//
+//	Test:       "Uniform/q=PulsarQ/i=N"            -> param: q
+//	            "Ternary/q=PulsarQ/density=0.50/i=N" -> param: q, density
+//	            "CenteredBinomial/q=PulsarQ/eta=2/i=N" -> param: q, eta
+//	InputHex:   raw entropy bytes (4096) from a SHA-256 hash chain
+//	OutputHex:  first 64 samples, packed little-endian (512 bytes)
 //
 // Entropy bytes are deterministic from the test name + index seed so
 // emit runs are byte-stable.
@@ -42,8 +43,8 @@ const (
 	PulsarQ uint64 = 0x1000000004A01
 	NTT998  uint64 = 998244353
 
-	NumSamples    = 64
-	EntropyBytes  = 4096
+	NumSamples   = 64
+	EntropyBytes = 4096
 )
 
 func main() {

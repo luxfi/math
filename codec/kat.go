@@ -50,7 +50,7 @@ type KATEntry struct {
 // KATBundle is a collection of entries written to a JSON file at a
 // stable path. C++ replay tests load the same file by path.
 type KATBundle struct {
-	Schema  string     `json:"schema"`  // "lux.math.kat.v1"
+	Schema  string     `json:"schema"` // "lux.math.kat.v1"
 	Entries []KATEntry `json:"entries"`
 }
 

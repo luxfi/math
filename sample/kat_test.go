@@ -15,9 +15,9 @@ import (
 )
 
 const (
-	katNumSamples   = 64
-	katPulsarQ      = uint64(0x1000000004A01)
-	katNTT998       = uint64(998244353)
+	katNumSamples = 64
+	katPulsarQ    = uint64(0x1000000004A01)
+	katNTT998     = uint64(998244353)
 )
 
 // TestKATBundle_RoundTrip — load the JSON KAT bundle emitted by

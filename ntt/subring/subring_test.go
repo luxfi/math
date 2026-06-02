@@ -10,8 +10,8 @@ import (
 
 // pulsarN256 is the Pulsar/LP-073 NTT instance: N=256, Q=2^48 + 4*N + 1.
 const (
-	pulsarN  = 256
-	pulsarQ  = uint64(0x1000000004A01)
+	pulsarN = 256
+	pulsarQ = uint64(0x1000000004A01)
 )
 
 // TestSubRing_RoundTrip exercises the full path:
@@ -123,7 +123,7 @@ func MulModSlow(x, y, q uint64) uint64 {
 func mul64(x, y uint64) (hi, lo uint64) {
 	xLo, xHi := x&0xffffffff, x>>32
 	yLo, yHi := y&0xffffffff, y>>32
-	t := xLo*yLo
+	t := xLo * yLo
 	lo = t & 0xffffffff
 	t = (t >> 32) + xHi*yLo
 	w1 := t & 0xffffffff
