@@ -194,12 +194,12 @@ func (b BackendID) Validate() error {
 // implementation_version) tuple so cross-runtime replay can match
 // like-for-like.
 type KATHeader struct {
-	ParameterSet         string      `json:"parameter_set"`
-	ModulusID            ModulusID   `json:"modulus_id"`
-	BackendID            BackendID   `json:"backend_id"`
-	HashSuiteID          HashSuiteID `json:"hash_suite_id"`
-	ImplementationName   string      `json:"implementation_name"`
-	ImplementationVersion string     `json:"implementation_version"`
+	ParameterSet          string      `json:"parameter_set"`
+	ModulusID             ModulusID   `json:"modulus_id"`
+	BackendID             BackendID   `json:"backend_id"`
+	HashSuiteID           HashSuiteID `json:"hash_suite_id"`
+	ImplementationName    string      `json:"implementation_name"`
+	ImplementationVersion string      `json:"implementation_version"`
 }
 
 // Validate ensures every required field is set and known.
