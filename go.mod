@@ -5,7 +5,7 @@ go 1.26.3
 require (
 	github.com/luxfi/ids v1.2.9
 	github.com/luxfi/math/big v0.1.0
-	github.com/luxfi/sampler v1.0.0
+	github.com/luxfi/sampler v1.1.0
 	github.com/stretchr/testify v1.11.1
 	github.com/zeebo/blake3 v0.2.4
 	golang.org/x/exp v0.0.0-20260312153236-7ab1446f8b90
