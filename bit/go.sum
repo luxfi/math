@@ -1,0 +1,4 @@
+github.com/holiman/uint256 v1.3.2 h1:a9EgMPSC1AAaj1SZL5zIQD3WbwTuHrMGOerLjGmM/TA=
+github.com/holiman/uint256 v1.3.2/go.mod h1:EOMSn4q6Nyt9P6efbI3bueV4e1b3dGlUCXeiRV4ng7E=
+github.com/luxfi/geth v1.20.2 h1:XwNVyIpb4ip4wy/SsQS8fHdVEVlmsvLNwGPykFDvutw=
+github.com/luxfi/geth v1.20.2/go.mod h1:5vJMlOrSvz4ORC+fe16k+i0CUqTadmiFi9ldAHb5TE4=

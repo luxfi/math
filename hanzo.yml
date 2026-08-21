@@ -1,0 +1,13 @@
+# math is four modules, not one: the root plus nested bit/, big/ and safe/, each
+# with its own go.mod and its own release tag. `./...` stops at a nested module
+# boundary, so the plain root command leaves three of the four unbuilt and
+# untested — bit/ in particular has the only test that imports luxfi/geth.
+test:
+  - name: build
+    run: |
+      set -e
+      for m in . bit big safe; do (cd "$m" && go build ./...); done
+  - name: unit
+    run: |
+      set -e
+      for m in . bit big safe; do (cd "$m" && go test ./... -count=1); done
