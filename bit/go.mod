@@ -1,6 +1,6 @@
 module github.com/luxfi/math/bit
 
-go 1.26.4
+go 1.27.1
 
 require github.com/luxfi/geth v1.20.2
 
